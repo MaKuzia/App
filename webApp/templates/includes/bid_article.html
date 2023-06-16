@@ -1,0 +1,16 @@
+<article>
+<ul>
+    <li>
+      Кабинет: {{ bid.user.username }}
+    </li>
+    <li>
+      Дата: {{ bid.pub_date|date:"d E Y" }}
+    </li>
+    <li>
+      <b>Статус: {{ bid.status.status }}</b>
+    </li>
+  </ul>
+  <p>{{ bid.text }}</p>
+  <a href="{% url 'bid:bid_detail' bid.pk %}">подробная информация</a>
+  {% if not forloop.last %}<hr>{% endif %}
+</article>

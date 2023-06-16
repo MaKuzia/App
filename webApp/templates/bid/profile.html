@@ -1,0 +1,15 @@
+{% extends 'base.html' %}
+{% block title %}
+  Кабинет: {{ user.username }}
+{% endblock %}
+
+{% block content%}  
+  <h1> Пользователь: {{ user.username }} </h1>
+  <h3> Всего заявок: {{ user.bids.count }} </h3> 
+  <article>
+      {% include 'bid/includes/bids_list.html' %} 
+  </article>   
+    </div>
+  {% include 'bid/includes/paginator.html' %} 
+
+{% endblock %}

@@ -1,0 +1,48 @@
+{% extends 'base.html' %}
+{% load thumbnail %}
+{% load user_filters %}
+
+{% block title %}
+  {{ post.text|slice:":255" }}
+{% endblock %}
+{% block content%}
+    <main>
+      <div class="row">
+        <aside class="col-12 col-md-3">
+          <ul class="list-group list-group-flush">
+            <li class="list-group-item">
+              Дата публикации: {{ bid.pub_date|date:"d E Y" }}
+            </li>
+            {% if bid.device %}  
+            <li class="list-group-item">
+              Устройство: {{ bid.device.title }}
+            {% endif %}
+            </li>
+            <li class="list-group-item">
+              Пользоваель: {{ bid.user.username }}
+            </li>
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+              Всего заявок:  <span >{{ bid.user.bids.count }}</span>
+            </li>
+            <li class="list-group-item">
+              <a href="{% url 'bid:profile' bid.user.username %}">
+                все заявки пользователя
+              </a>
+            </li>
+          </ul>
+        </aside>
+        <article class="col-12 col-md-9">
+          {% thumbnail bid.image "960x339" crop="center" upscale=True as im %}
+          <img class="card-img my-2" src="{{ im.url }}">
+          {% endthumbnail %}
+          <p>
+            {{ bid.text|linebreaks }}
+          </p>
+          {% if request.user == bid.user and bid.status.status == 'New' %}
+          <a class="btn btn-primary"
+          href="{% url 'bid:bid_edit' bid.pk %}">редактировать заявку</a>
+          {% endif %}
+        </article>
+      </div> 
+    </main>
+{% endblock %}
